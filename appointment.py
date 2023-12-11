@@ -2,6 +2,10 @@ class Appointment:
     """
     Represents an appointment at Jojo's Hair Salon.
     """
+days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+the_first_hour = 9  # Assuming salon opens at 9 AM
+the_last_hour = 17  # Assuming salon closes at 5 PM
+
     
 def print_menu():
     """
