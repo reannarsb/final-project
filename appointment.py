@@ -144,19 +144,23 @@ class Appointment:
         """
         return f'{self.__client_name:<20}{self.__client_phone:<15}{self.__day_of_week:<10}{self.__start_time_hour:02}:00 - {self.get_end_time_hour():02}:00 {self.get_appt_type_desc()}'
     
-    def create_weekly_calendar(self):
-        """
-        Create a weekly calendar of appointments for each day (Monday to Saturday) and each hour from 9 AM to 4 PM.
+def create_weekly_calendar(appointment_calendar):
+    """
+    Creates a weekly calendar of appointments for each day and each hour.
 
-        Returns:
-        list: A list of Appointment objects representing the weekly calendar.
-        """
-        calendar = []  # Initialize an empty list to store Appointment objects
-        days_of_the_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    Args:
+    appointment_calendar (list): The list to store the created Appointment objects.
+    """
+    # Clear the existing appointments in the calendar
+    appointment_calendar.clear()
 
-        # Loop through each day and hour to create and append Appointment objects to the calendar
-        for day in days_of_the_week:
-            for hour in range(9, 17):  # Hours range from 9 AM to 4 PM
-                calendar.append(Appointment(day, hour))
+    # Loop through each day in the week
+    for index in range(len(days_of_week)):
+        # Loop through each hour of the day
+        for time in range(the_first_hour, the_last_hour + 1):
+            # Create a new Appointment object for the current day and time
+            appointment = ap.Appointment(days_of_week[index], time)
+            
+            # Append the new Appointment to the calendar
+            appointment_calendar.append(appointment)
 
-        return calendar
