@@ -6,32 +6,22 @@ class Appointment:
         self.description = description
 
 def show_appointments_by_day(day_to_show, appointment_list):
-    """
-    Displays appointments for a specific day from the given list.
-
-    Args:
-    day_to_show (str): Day of the week to display appointments for.
-    appointment_list (list): List of Appointment objects.
-    """
-    # Filter appointments for the specified day
+    # Filters appointments for the specified day
     matching_appointments = [app for app in appointment_list if app.day == day_to_show]
 
-    # If no matching appointments, print a message and return
     if not matching_appointments:
+        #If the day dosn't match, then no appointment message appears
         print(f"No appointments found for {day_to_show}.")
         return
 
-    # Print header for the appointment table
     print(f"Appointments for {day_to_show}:")
-    
-    # Display each matching appointment with formatted details
     for appointment in matching_appointments:
+        # Prints appointment details in the specified format
         print(f"{appointment.day}\t{appointment.time}\t- {str(int(appointment.time.split(':')[0]) + 1)}:00\t{appointment.description}")
 
 
-
+# appointments
 appointments = [
-    # List of Appointment objects representing the salon's schedule
     Appointment(day="Monday", time="09:00", description="Available"),
     Appointment(day="Monday", time="10:00", description="Available"),
     Appointment(day="Monday", time="11:00", description="Available"),
@@ -68,13 +58,15 @@ appointments = [
     Appointment(day="Saturday", time="10:00", description="Ladies Cut"),
 ]
 
-user_day = input("Enter the day for appointments: ")  # Prompt user for a day
-user_time = input("Enter the time for appointments: ")  # Prompt user for a time
+# Get user input for the day and time
+user_day = input("Enter the day for appointments: ")
+user_time = input("Enter the time for appointments: ")
 
-show_appointments_by_day(user_day, appointments)  # Display appointments for the specified day
+# Call the function to display appointments for the specified day
+show_appointments_by_day(user_day, appointments)
 
 
-def __init__(self, client_name, client_phone, appt_type, day, time):
+ def __init__(self, client_name, client_phone, appt_type, day, time):
         self.client_name = client_name
         self.client_phone = client_phone
         self.appt_type = appt_type
@@ -82,20 +74,25 @@ def __init__(self, client_name, client_phone, appt_type, day, time):
         self.time = time
 
     def is_scheduled(self):
+        # Check if an appointment is scheduled by verifying if appt_type is not None
         return self.appt_type is not None
 
     def format_record(self):
+        # Format the appointment record as a CSV line
         return f"{self.client_name},{self.client_phone},{self.appt_type},{self.day},{self.time}\n"
 
 
 def save_scheduled_appointments(appointment_list):
+    # Get the filename from the user
     filename = input("Enter appointment filename: ")
 
     try:
         with open(filename, 'r', newline='') as file:
+            # Read the CSV file using csv.reader
             csv_reader = csv.reader(file)
-            header = next(csv_reader) 
+            header = next(csv_reader)  # Read the header row
 
+            # Iterate through each row in the CSV and create Appointment objects
             for row in csv_reader:
                 appointment = Appointment(
                     client_name=row[0],
@@ -104,6 +101,7 @@ def save_scheduled_appointments(appointment_list):
                     day=row[3],
                     time=row[4]
                 )
+                # Append the created Appointment object to the appointment_list
                 appointment_list.append(appointment)
 
         print(f"{len(appointment_list)} appointments loaded from {filename}")
@@ -114,12 +112,15 @@ def save_scheduled_appointments(appointment_list):
         return save_scheduled_appointments(appointment_list)
 
 
-
+# Creates an empty list to store appointments
 appointments = []
+
+# Calls the function to load appointments from the CSV file
 save_scheduled_appointments(appointments)
 
-
+# Print the loaded appointments
 print("Appointments Scheduled:")
 for appointment in appointments:
     print(appointment.client_name, appointment.client_phone, appointment.appt_type, appointment.day, appointment.time)
+
 
