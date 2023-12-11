@@ -98,6 +98,12 @@ class Appointment:
         self.__client_name = client_name
         
     def set_client_phone(self, client_phone):
+        """
+        Set the clients phone for the appointment
+
+        Args:
+        client_phone (str): The clients phone.
+        """
         self.__client_phone = client_phone
         
 
@@ -181,6 +187,16 @@ def create_weekly_calendar():
 
 
 def load_scheduled_appointments(filename, calendar):
+    """
+    Loads scheduled appointments from a file into the calendar.
+
+    Args:
+    filename (str): The name of the file containing appointment details.
+    calendar (list): The list of Appointment objects representing the weekly calendar.
+
+    Returns:
+    int: The count of appointments successfully loaded.
+    """
     appointments_loaded = 0
     file = open(filename, 'r')
     lines = file.readlines()
@@ -207,6 +223,17 @@ def load_scheduled_appointments(filename, calendar):
 
     
 def find_appointment_by_time(calendar, day, start_time):
+    """
+    Finds an appointment in the calendar at a specified day and start time.
+
+    Args:
+    calendar (list): The list of Appointment objects representing the weekly calendar.
+    day (str): The day of the appointment.
+    start_time (int): The start time of the appointment.
+
+    Returns:
+    Appointment or None: The appointment object if found, otherwise None.
+    """
     for appointment in calendar:
         if appointment.get_day_of_week().lower() == day.lower() and appointment.get_start_time_hour() == start_time:
             return appointment
@@ -249,6 +276,16 @@ def show_appointments_by_day(day_to_show, appointment_list):
     
     
 def save_scheduled_appointments(appointments, filename):
+     """
+    Saves scheduled appointments to a file.
+
+    Args:
+    appointments (list): The list of Appointment objects to be saved.
+    filename (str): The name of the file to save the appointments.
+
+    Returns:
+    int: The count of appointments successfully saved.
+    """
     file = open(filename, 'w', newline='')
     save_count = 0
 
