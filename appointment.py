@@ -1,3 +1,4 @@
+import csv
 class Appointment:
     def __init__(self, day, time, description="Available"):
         self.day = day
@@ -71,3 +72,54 @@ user_day = input("Enter the day for appointments: ")  # Prompt user for a day
 user_time = input("Enter the time for appointments: ")  # Prompt user for a time
 
 show_appointments_by_day(user_day, appointments)  # Display appointments for the specified day
+
+
+def __init__(self, client_name, client_phone, appt_type, day, time):
+        self.client_name = client_name
+        self.client_phone = client_phone
+        self.appt_type = appt_type
+        self.day = day
+        self.time = time
+
+    def is_scheduled(self):
+        return self.appt_type is not None
+
+    def format_record(self):
+        return f"{self.client_name},{self.client_phone},{self.appt_type},{self.day},{self.time}\n"
+
+
+def save_scheduled_appointments(appointment_list):
+    filename = input("Enter appointment filename: ")
+
+    try:
+        with open(filename, 'r', newline='') as file:
+            csv_reader = csv.reader(file)
+            header = next(csv_reader) 
+
+            for row in csv_reader:
+                appointment = Appointment(
+                    client_name=row[0],
+                    client_phone=row[1],
+                    appt_type=int(row[2]),
+                    day=row[3],
+                    time=row[4]
+                )
+                appointment_list.append(appointment)
+
+        print(f"{len(appointment_list)} appointments loaded from {filename}")
+        return len(appointment_list)
+
+    except FileNotFoundError:
+        print("File not found. Re-enter the filename.")
+        return save_scheduled_appointments(appointment_list)
+
+
+
+appointments = []
+save_scheduled_appointments(appointments)
+
+
+print("Appointments Scheduled:")
+for appointment in appointments:
+    print(appointment.client_name, appointment.client_phone, appointment.appt_type, appointment.day, appointment.time)
+
