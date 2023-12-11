@@ -10,20 +10,22 @@ def print_menu():
     print("1) Schedule an appointment \n2) Find appointment by name \n3) Print calendar for a specific day \n4) Cancel an appointment \n9) Exit the system")
     selection = input("Enter your selection: ")
 
-def create_weekly_calendar():
+def create_weekly_calendar(appointment_calendar):
     """
-    Create a weekly calendar of appointments for each day (Monday to Saturday) and each hour from 9 AM to 4 PM.
+    Creates a weekly calendar of appointments for each day and each hour.
 
-    Returns:
-    list: A list of Appointment objects representing the weekly calendar.
+    Args:
+    appointment_calendar (list): The list to store the created Appointment objects.
     """
-    calendar = []  # Initialize an empty list to store Appointment objects
-    days_of_the_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    # Clear the existing appointments in the calendar
+    appointment_calendar.clear()
 
-    # Loop through each day and hour to create and append Appointment objects to the calendar
-    for day in days_of_the_week:
-        for hour in range(9, 17):  # Hours range from 9 AM to 4 PM
-            calendar.append(Appointment(day, hour))
-
-    return calendar
-
+    # Loop through each day in the week
+    for index in range(len(days_of_week)):
+        # Loop through each hour of the day
+        for time in range(the_first_hour, the_last_hour + 1):
+            # Create a new Appointment object for the current day and time
+            appointment = ap.Appointment(days_of_week[index], time)
+            
+            # Append the new Appointment to the calendar
+            appointment_calendar.append(appointment)
