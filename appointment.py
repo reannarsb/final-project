@@ -1,4 +1,5 @@
 import csv
+import os
 class Appointment:
     """
     Represents an appointment at Jojo's Hair Salon.
